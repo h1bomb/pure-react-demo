@@ -1,0 +1,8 @@
+[
+    {"type": "Sporting Goods", "price": "$49.99", "name": "Football"},
+    {"type": "Sporting Goods", "price": "$9.99", "name": "Baseball"},
+    {"type": "Sporting Goods", "price": "$29.99", "name": "Basketball"},
+    {"type": "Electronics", "price": "$99.99", "name": "iPod Touch"},
+    {"type": "Electronics", "price": "$399.99", "name": "iPhone 5"},
+    {"type": "Electronics", "price": "$199.99", "name": "Nexus 7"}
+  ]
