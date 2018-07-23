@@ -10,5 +10,8 @@
     "rules": {
         "jsx-a11y/href-no-hash": [0],
         "react/prop-types": 0
+    },
+    "globals": {
+        "less":true
     }
 }

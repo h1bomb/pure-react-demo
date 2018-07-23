@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
-import { Spin, Layout } from 'antd';
+import { Spin, Layout, Switch as SwitchUI } from 'antd';
 
 const { Content } = Layout;
 const Loading = () => (
@@ -18,8 +18,24 @@ const About = Loadable({
   loading: Loading,
 });
 
+const colorList = {
+  main: '#1890ff',
+  second: '#00e9be',
+};
+
+function onChange(checked) {
+  let color = colorList.second;
+  if (checked) {
+    color = colorList.main;
+  }
+  less.modifyVars({
+    '@primary-color': color,
+  });
+}
+
 const Main = () => (
   <Content style={{ padding: '50px' }}>
+    <SwitchUI defaultChecked onChange={onChange} />
     <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
       <Router>
         <Switch>

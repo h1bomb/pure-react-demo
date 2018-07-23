@@ -5,6 +5,7 @@ import Search from '../components/search';
 import List from '../components/list';
 import SEARCH_ITEM, { FETCH_DATA } from '../actions';
 
+
 const LoadableErrorComponent = Loadable({
   loader: () => import('../components/error'),
   loading: () => (
