@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Search from '../components/search';
 import List from '../components/list';
 import SEARCH_ITEM, { FETCH_DATA } from '../actions';
-
+import AsyncLoadComponet from './AsyncLoadComponet';
 
 const LoadableErrorComponent = Loadable({
   loader: () => import('../components/error'),
@@ -39,6 +39,16 @@ class App extends Component {
         <LoadErr message={error} />
         <Search value={val} setValue={this.setValue} />
         <List filter={val} data={list} isLoading={isLoading} />
+        <AsyncLoadComponet
+          loadComponent={import('../components/about')}
+          render={({ com, props }) => {
+            if (!com) {
+              return null;
+            }
+            const About = com;
+            return <About {...props} />;
+          }}
+        />
       </div>);
   }
 }

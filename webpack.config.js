@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // html模板文件引
 const CleanWebpackPlugin = require('clean-webpack-plugin');// 删除目录插件
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 process.env.BABEL_ENV = process.env.NODE_ENV || 'development';
 
@@ -77,6 +78,7 @@ module.exports = {
       type: 'file',
     }]),
     new DashboardPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
   output: {
     filename: '[name]-bundle.js', // 生成文件名
