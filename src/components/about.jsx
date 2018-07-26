@@ -1,10 +1,21 @@
 import React from 'react';
-import { Alert } from 'antd';
+import { Alert, Spin } from 'antd';
+import LoadData from './loaddata';
 
 export default () => (
-  <Alert
-    message="Try UI"
-    description="Made by Hbomb,for learn react."
-    type="info"
-    showIcon
-  />);
+  <LoadData url="/stub.json">
+    {(data, isLoading) => {
+      if (isLoading) {
+        return (<Spin />);
+      }
+      return (
+        <Alert
+          message="Try UI"
+          description={JSON.stringify(data)}
+          type="info"
+          showIcon
+        />
+      );
+    }}
+  </LoadData>
+);
