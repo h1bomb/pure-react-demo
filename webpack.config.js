@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // html模板文件引
 const CleanWebpackPlugin = require('clean-webpack-plugin');// 删除目录插件
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
@@ -48,15 +48,15 @@ module.exports = {
   optimization: {
     splitChunks: {
       cacheGroups: {
-        commons: {
-          chunks: 'initial',
-          minChunks: 2,
-          maxInitialRequests: 5, // The default limit is too small to showcase the effect
-          minSize: 0, // This is example is too small to create commons chunks
-        },
+        // commons: {
+        //   chunks: 'initial',
+        //   minChunks: 2,
+        //   maxInitialRequests: 5, // The default limit is too small to showcase the effect
+        //   minSize: 0, // This is example is too small to create commons chunks
+        // },
         vendor: {
           test: /node_modules/,
-          chunks: 'initial',
+          chunks: 'all',
           name: 'vendor',
           priority: 10,
           enforce: true,
@@ -76,6 +76,12 @@ module.exports = {
         cache: true,
         parallel: true,
         sourceMap: true, // set to true if you want JS source maps
+        uglifyOptions: {
+          compress: {
+            pure_getters: true,
+            side_effects: false,
+          },
+        },
       }),
       new OptimizeCSSAssetsPlugin({}),
     ],
@@ -104,7 +110,7 @@ module.exports = {
       filename: 'css/app.[name].css',
       // chunkFilename: 'css/app.[contenthash:12].css',
     }),
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
   ],
   output: {
     filename: '[name]-bundle.js', // 生成文件名

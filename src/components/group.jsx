@@ -24,4 +24,25 @@ function withGroup(WarpComponent, ListCompont) {
   return Group;
 }
 
+// const Card = ({ title, key, children }) => (
+//   <div key={key}>
+//     {title}
+//     {children}
+//   </div>
+// );
+
+// const Items = ({ key, items }) => (
+//   <ul key={key}>
+//     {items.map(item => (
+//       <li>
+//         {item.name}
+//         {' '}
+//          ---
+//         {' '}
+//         {item.price}
+//       </li>
+//     ))}
+//   </ul>
+// );
+
 export default withGroup(Card, Items);
