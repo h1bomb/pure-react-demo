@@ -3,14 +3,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // html模板文件引
 const CleanWebpackPlugin = require('clean-webpack-plugin');// 删除目录插件
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+// const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const FileListPlugin = require('./fileListPlugin');
 
 process.env.BABEL_ENV = process.env.NODE_ENV || 'development';
 const env = process.env.BABEL_ENV;
-console.log(env);
 module.exports = {
   mode: env,
   resolve: {
@@ -41,7 +41,7 @@ module.exports = {
         use: [
           env === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader,
           'css-loader'],
-        include: [/node_modules/],
+        include: [/node_modules/, /src/],
       },
     ],
   },
@@ -110,7 +110,8 @@ module.exports = {
       filename: 'css/app.[name].css',
       // chunkFilename: 'css/app.[contenthash:12].css',
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
+    new FileListPlugin(),
   ],
   output: {
     filename: '[name]-bundle.js', // 生成文件名

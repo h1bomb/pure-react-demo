@@ -2,7 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Loadable from 'react-loadable';
 import { Spin, Layout, Switch as SwitchUI } from 'antd';
+import { DragDropContextProvider } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
 import loadComponent from './components/LoadComponent';
+import Dnd from './containers/dnd';
+import Move from './components/move';
 
 const { Content } = Layout;
 const Loading = () => (
@@ -45,13 +49,17 @@ const Main = () => (
   <Content style={{ padding: '50px' }}>
     <SwitchUI defaultChecked onChange={onChange} />
     <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-      <Router>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/with" component={B} />
-        </Switch>
-      </Router>
+      <DragDropContextProvider backend={HTML5Backend}>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/with" component={B} />
+            <Route path="/dnd" component={Dnd} />
+            <Route path="/move" component={Move} />
+          </Switch>
+        </Router>
+      </DragDropContextProvider>
     </div>
   </Content>
 

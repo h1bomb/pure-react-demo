@@ -1,0 +1,17 @@
+.card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ccc;
+    height: 50px;
+    width: 50px;
+}
+
+.cards-list {
+    position: relative;
+    width: 65px;
+    height: 600px;
+    float: left;
+    margin: 0 20px;
+    padding-top: 130px; 
+  }
