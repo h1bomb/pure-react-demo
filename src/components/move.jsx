@@ -9,8 +9,8 @@ const ToLists = ({ lists }) => (
         className="cards-list"
         key={key} // eslint-disable-line
       >
-        { list.map(val => (
-          <div key={val} className="card">
+        { list.map((val, k) => (
+          <div key={val} style={{ zIndex: list.length - k }} className="card">
             {val}
           </div>
         ))}
@@ -25,7 +25,7 @@ const FromBox = ({ activeItems, items, go }) => {
       <Trail
         native
         from={{ x: 0, y: 0 }}
-        to={{ x: 100, y: 100 }}
+        to={{ x: 80, y: 100 }}
         keys={activeItems}
       >
         {activeItems.map((val, key) => ({ x, y }) => (
@@ -36,6 +36,7 @@ const FromBox = ({ activeItems, items, go }) => {
               go();
             }}
             style={{
+              zIndex: 100,
               transform: interpolate([x, y], (mx, my) => `translate3d(${(mx * key)}px,${my}px,0)`),
             }}
           >
@@ -49,12 +50,13 @@ const FromBox = ({ activeItems, items, go }) => {
   return (
     <div style={{ position: 'absolute' }}>
       {move}
-      {items.map(val => (
+      {items.map((val, k) => (
         <div
           key={val}
           onClick={() => {
             go();
           }}
+          style={{ zIndex: items.length - k }}
           className="card"
         >
           {val}
@@ -80,8 +82,14 @@ class Move extends React.PureComponent {
     this.setState({
       activeItems: newActiveItems,
       items: newItems,
-      lists: newLists,
     });
+
+    setTimeout(() => {
+      this.setState({
+        activeItems: [],
+        lists: newLists,
+      });
+    }, 1000);
   }
 
   render() {
