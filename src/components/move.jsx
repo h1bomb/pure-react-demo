@@ -28,28 +28,21 @@ const FromBox = ({ activeItems, items, go }) => {
         to={{ x: 80, y: 100 }}
         keys={activeItems}
       >
-        {activeItems.map((val, key) => ({ x, y }) => {
-          console.log('--------');
-          interpolate([x, y], (mx, my) => {
-            console.log(mx, my);
-          });
-          console.log('----------');
-          return (
-            <animated.div
-              key={val}
-              className="card"
-              onClick={() => {
-                go();
-              }}
-              style={{
-                zIndex: 100,
-                transform: interpolate([x, y], (mx, my) => `translate3d(${(mx * key)}px,${my}px,0)`),
-              }}
-            >
-              {val}
-            </animated.div>
-          );
-        })}
+        {activeItems.map((val, key) => ({ x, y }) => (
+          <animated.div
+            key={val}
+            className="card"
+            onClick={() => {
+              go();
+            }}
+            style={{
+              zIndex: 100,
+              transform: interpolate([x, y], (mx, my) => `translate3d(${(mx * key)}px,${my}px,0)`),
+            }}
+          >
+            {val}
+          </animated.div>
+        ))}
       </Trail>
     );
   }
