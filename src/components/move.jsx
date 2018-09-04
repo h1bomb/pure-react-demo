@@ -1,6 +1,10 @@
 import React from 'react';
-import { Trail, animated, interpolate } from 'react-spring';
+import {
+  Trail, animated, interpolate, Transition, Keyframes, config,
+} from 'react-spring';
 import './move.css';
+import delay from 'delay';
+
 
 const ToLists = ({ lists }) => (
   <div>
@@ -65,6 +69,18 @@ const FromBox = ({ activeItems, items, go }) => {
     </div>
   );
 };
+const Container = Keyframes.Spring({
+  // Single props
+  show: { to: { opacity: 1 } },
+  // Chained animations (arrays)
+  showAndHide: [{ to: { opacity: 1 } }, { to: { opacity: 0 } }],
+  // Functions with side-effects
+  wiggle: async (call) => {
+    await call({ to: { x: 100 }, config: config.wobbly });
+    await delay(1000);
+    await call({ to: { x: 0 }, config: config.gentle });
+  },
+});
 class Move extends React.PureComponent {
   state = { activeItems: [], lists: [[], []], items: ['item1', 'item2', 'item3', 'item4', 'item5'] }
 
@@ -98,6 +114,27 @@ class Move extends React.PureComponent {
       <div>
         <ToLists lists={lists} />
         <FromBox activeItems={activeItems} items={items} go={this.go} />
+        <ul>
+          <Transition
+            keys={items.map(item => item.key)}
+            from={{ opacity: 0, height: 0 }}
+            enter={{ opacity: 1, height: 20 }}
+            leave={{ opacity: 0, height: 0, pointerEvents: 'none' }}
+          >
+            {items.map(item => styles => (
+              <li style={styles}>
+                {item}
+              </li>
+            ))}
+          </Transition>
+        </ul>
+        <Container state="show">
+          {styles => (
+            <div style={styles}>
+Hello
+            </div>
+          )}
+        </Container>
       </div>
     );
   }

@@ -6,6 +6,9 @@
     height: 50px;
     width: 50px;
 }
+li {
+    background: #ccc;
+}
 
 .cards-list {
     position: relative;
