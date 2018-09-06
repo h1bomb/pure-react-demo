@@ -82,7 +82,15 @@ const Container = Keyframes.Spring({
   },
 });
 class Move extends React.PureComponent {
-  state = { activeItems: [], lists: [[], []], items: ['item1', 'item2', 'item3', 'item4', 'item5'] }
+  state = {
+    keyframe: 'show', activeItems: [], lists: [[], []], items: ['item1', 'item2', 'item3', 'item4', 'item5'],
+  }
+
+  setKey = () => {
+    this.setState({
+      keyframe: 'showAndHide',
+    });
+  }
 
   go = () => {
     const { items, lists } = this.state;
@@ -109,14 +117,19 @@ class Move extends React.PureComponent {
   }
 
   render() {
-    const { activeItems, items, lists } = this.state;
+    const {
+      activeItems, items, lists, keyframe,
+    } = this.state;
     return (
       <div>
+        <button type="button" onClick={this.setKey}>
+click
+        </button>
         <ToLists lists={lists} />
         <FromBox activeItems={activeItems} items={items} go={this.go} />
         <ul>
           <Transition
-            keys={items.map(item => item.key)}
+            keys={items.map(item => item.key + Math.random())}
             from={{ opacity: 0, height: 0 }}
             enter={{ opacity: 1, height: 20 }}
             leave={{ opacity: 0, height: 0, pointerEvents: 'none' }}
@@ -128,9 +141,9 @@ class Move extends React.PureComponent {
             ))}
           </Transition>
         </ul>
-        <Container state="show">
+        <Container state={keyframe}>
           {styles => (
-            <div style={styles}>
+            <div className="hello" style={styles}>
 Hello
             </div>
           )}

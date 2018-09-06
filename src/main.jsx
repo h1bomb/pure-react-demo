@@ -7,6 +7,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import loadComponent from './components/LoadComponent';
 import Dnd from './containers/dnd';
 import Move from './components/move';
+import Keyframe from './components/keyframe';
 
 const { Content } = Layout;
 const Loading = () => (
@@ -57,6 +58,7 @@ const Main = () => (
             <Route path="/with" component={B} />
             <Route path="/dnd" component={Dnd} />
             <Route path="/move" component={Move} />
+            <Route path="/keyframe" component={Keyframe} />
           </Switch>
         </Router>
       </DragDropContextProvider>

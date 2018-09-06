@@ -110,7 +110,7 @@ module.exports = {
       filename: 'css/app.[name].css',
       // chunkFilename: 'css/app.[contenthash:12].css',
     }),
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new FileListPlugin(),
   ],
   output: {
