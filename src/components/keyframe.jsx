@@ -1,8 +1,12 @@
 import './style.css';
 import React, { Fragment } from 'react';
-import { Keyframes, animated, config } from 'react-spring';
-import { Icon } from 'antd';
+import {
+  Keyframes, animated, config, Spring,
+} from 'react-spring';
+import { Button } from 'antd';
 import delay from 'delay';
+
+const ButtonGroup = Button.Group;
 
 const fast = { ...config.stiff, restSpeedThreshold: 1, restDisplacementThreshold: 0.01 };
 
@@ -26,12 +30,14 @@ const Sidebar = Keyframes.Spring({
 
 
 class App extends React.Component {
-  state = { open: undefined }
+  state = { open: undefined, fromOp: 0, toOp: 1 }
 
-  toggle = () => this.setState(state => ({ open: !state.open }))
+  setkey = (action) => {
+    this.setState({ open: action });
+  }
 
   render() {
-    const { open } = this.state;
+    const { open, fromOp, toOp } = this.state;
     let state;
     if (open === undefined) {
       state = 'peek';
@@ -40,15 +46,60 @@ class App extends React.Component {
     } else {
       state = 'close';
     }
-    const icon = open ? 'fold' : 'unfold';
+    const isShow = fromOp === 0 ? 'Hide' : 'Show';
+    const isPrimary = s => (s === state ? 'primary' : '');
+    const toggle = () => {
+      if (fromOp === 0) {
+        this.setState({
+          fromOp: 1,
+          toOp: 0,
+        });
+      } else {
+        this.setState({
+          fromOp: 0,
+          toOp: 1,
+        });
+      }
+    };
     return (
       <Fragment>
-        <Icon type={`menu-${icon}`} className="toggle" onClick={this.toggle} />
+        <Button onClick={toggle}>
+          {isShow}
+        </Button>
+        <br />
+        <ButtonGroup>
+          <Button type={isPrimary('peek')} onClick={() => { this.setkey(); }}>
+peek
+          </Button>
+          <Button type={isPrimary('open')} onClick={() => { this.setkey(true); }}>
+open
+          </Button>
+          <Button type={isPrimary('close')} onClick={() => { this.setkey(false); }}>
+close
+          </Button>
+        </ButtonGroup>
         <Sidebar native state={state}>
           {({ x }) => (
             <animated.div className="sidebar" style={{ transform: x.interpolate(xx => `translate3d(${xx}%,0,0)`) }} />
           )}
         </Sidebar>
+        <Spring from={{ opacity: fromOp }} to={{ opacity: toOp }}>
+          {styles => (
+            <div style={styles}>
+             i will fade in
+            </div>
+          )}
+        </Spring>
+        <Spring
+          from={{ x: 0, y: 0 }}
+          to={{ x: 80, y: 100 }}
+        >
+          {styles => (
+            <div style={{ width: '300px', backgroundColor: '#ccc', transform: `translate3d(${styles.x}px,${styles.y}px,0)` }}>
+             啦啦啦
+            </div>
+          )}
+        </Spring>
       </Fragment>
     );
   }
