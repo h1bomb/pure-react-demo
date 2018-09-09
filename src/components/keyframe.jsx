@@ -30,14 +30,39 @@ const Sidebar = Keyframes.Spring({
 
 
 class App extends React.Component {
-  state = { open: undefined, fromOp: 0, toOp: 1 }
+  state = {
+    open: undefined, fromOp: 0, toOp: 1, x: 0, y: 0, toX: 80, toY: 100,
+  }
 
   setkey = (action) => {
     this.setState({ open: action });
   }
 
+  toggleMove = () => {
+    const {
+      x, y,
+    } = this.state;
+    if (x === 0 && y === 0) {
+      this.setState({
+        x: 80,
+        y: 100,
+        toX: 0,
+        toY: 0,
+      });
+    } else {
+      this.setState({
+        x: 0,
+        y: 0,
+        toX: 100,
+        toY: 80,
+      });
+    }
+  }
+
   render() {
-    const { open, fromOp, toOp } = this.state;
+    const {
+      open, fromOp, toOp, fromX, fromY, toX, toY,
+    } = this.state;
     let state;
     if (open === undefined) {
       state = 'peek';
@@ -66,6 +91,9 @@ class App extends React.Component {
         <Button onClick={toggle}>
           {isShow}
         </Button>
+        <Button onClick={this.toggleMove}>
+           set
+        </Button>
         <br />
         <ButtonGroup>
           <Button type={isPrimary('peek')} onClick={() => { this.setkey(); }}>
@@ -91,8 +119,8 @@ close
           )}
         </Spring>
         <Spring
-          from={{ x: 0, y: 0 }}
-          to={{ x: 80, y: 100 }}
+          from={{ fromX, fromY }}
+          to={{ x: toX, y: toY }}
         >
           {styles => (
             <div style={{ width: '300px', backgroundColor: '#ccc', transform: `translate3d(${styles.x}px,${styles.y}px,0)` }}>
